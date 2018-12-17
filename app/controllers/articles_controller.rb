@@ -10,12 +10,15 @@ class ArticlesController < ApplicationController
     end
 
   def new
+    require_user
     @article = Article.new
   end
 
   def create
+    require_user
+    current_user
     @article = Article.new(article_params)
-    @article.user = User.first
+    @article.user_id = @current_user.id
     if @article.save
       flash[:notice] = "Article was successfully created"
       redirect_to article_path(@article)
@@ -28,9 +31,11 @@ class ArticlesController < ApplicationController
   end
 
   def edit
+    require_user
   end
 
   def update
+    require_user
     if @article.update(article_params)
      flash[:notice] = "Article was updated"
      redirect_to article_path(@article)
@@ -40,9 +45,10 @@ class ArticlesController < ApplicationController
    end
 
    def destroy
-    @article.destroy
-    flash[:notice] = "Article was deleted"
-    redirect_to articles_path
+     require_user
+     @article.destroy
+     flash[:notice] = "Article was deleted"
+     redirect_to articles_path
    end
 
   private
