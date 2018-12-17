@@ -3,6 +3,8 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    current_user
+    puts @current_user
    end
 
    def set_user
@@ -52,10 +54,15 @@ class UsersController < ApplicationController
 
   def destroy
     require_user
-    @user.destroy
-    flash[:notice] = "L'administrateur a été supprimé."
-    redirect_to users_path
-  end
+    current_user
+    if @current_user == @user
+      then flash[:notice] = "Impossible de supprimer son propre profil."
+      redirect_to users_path
+    else @user.destroy
+      flash[:notice] = "L'administrateur a été supprimé."
+      redirect_to users_path
+    end
+    end
 
   private
     def user_params
