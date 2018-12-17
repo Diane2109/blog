@@ -26,6 +26,8 @@ Rails.application.routes.draw do
 
   get 'qui-sommes-nous', to: 'pages#about'
 
+  get 'nouvel-article', to: 'articles#new'
+
 
 
   resources :pages

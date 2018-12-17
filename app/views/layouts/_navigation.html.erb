@@ -38,6 +38,7 @@
       </form>
       <ul class="nav navbar-nav navbar-right">
       <% if logged_in? %>
+      <li><%= link_to "Nouvel article", new_article_path, method: :get %></li>
       <li><%= link_to "Log out", logout_path, method: :delete %></li>
       <% end %>
       </ul>
